@@ -6,7 +6,7 @@ import googleapiclient.errors
 
 from google.oauth2.credentials import Credentials 
 from google.auth.transport.requests import Request
-import googleapiclient.http import MediaFileUpload
+from googleapiclient.http import MediaFileUpload
 
 scopes = ["https://www.googleapis.com/auth/youtube"]
 
