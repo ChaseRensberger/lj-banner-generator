@@ -2,6 +2,8 @@ import sharp from "sharp";
 import TextToSVG from "text-to-svg";
 import SVGToJpeg from "convert-svg-to-jpeg";
 
+const args = process.argv.slice(2);
+
 async function addTextToImage(
   inputPath,
   text,
