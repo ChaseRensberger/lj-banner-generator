@@ -1,5 +1,5 @@
 import os
-# import sys
+import sys
 
 import googleapiclient.discovery
 import googleapiclient.errors
@@ -11,7 +11,7 @@ scopes = ["https://www.googleapis.com/auth/youtube"]
 
 def main():
 
-    # channel_id = sys.argv[1]
+    channel_id = sys.argv[1]
 
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
@@ -30,8 +30,7 @@ def main():
 
     request = youtube.channels().list(
         part="statistics",
-        # id=channel_id,
-        mine=True
+        id=channel_id,
     )
     response = request.execute()
 
