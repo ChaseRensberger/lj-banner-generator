@@ -1,14 +1,10 @@
 import os
 import sys
 
-import googleapiclient.discovery
-import googleapiclient.errors
-
-from google.oauth2.credentials import Credentials 
-from google.auth.transport.requests import Request
+from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-
-scopes = ["https://www.googleapis.com/auth/youtube"]
+from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request
 
 def main():
 
@@ -26,33 +22,17 @@ def main():
         with open('credentials.json', 'w') as file:
             file.write(credentials.to_json())
 
-    youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, credentials=credentials)
+    youtube = build(api_service_name, api_version, credentials=credentials)
+    request = youtube.channelBanners().insert(
+        channelId=channel_id,
+        body={},
+        
+        media_body=MediaFileUpload("output_banner.jpeg", mimetype='image/jpeg')
+    )
+    response = request.execute()
+    print(response)
     
-    print(channel_id)
 
-    # media = MediaFileUpload('output_banner.jpeg', mimetype='image/jpeg')
-    # request = youtube.channelBanners().insert(
-    #     media_body=media
-    # )
-    # response = request.execute()
-    # print(response)
-
-    # request = youtube.channels().update(
-    #     part='brandingSettings',
-    #     body={
-    #         'id': channel_id,
-    #         'brandingSettings': {
-    #             'image': {
-    #                 'bannerExternalUrl': response['url']
-    #             }
-    #         }
-    #     }
-
-    # ).execute()
-    # response = request.execute()
-
-    # print(response)
 
 if __name__ == "__main__":
     main()
