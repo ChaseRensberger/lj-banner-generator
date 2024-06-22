@@ -44,8 +44,6 @@ async function addTextToImage(
       .toFile(outputFilename);
     //   .toBuffer(); // Convert the processed image to a buffer instead of saving it to a file
 
-    console.log("File created successfully");
-
     return result;
   } catch (error) {
     throw error;
@@ -56,7 +54,7 @@ const inputPath = "input_banner.jpeg";
 const fontPath = "Arial.ttf";
 const currentSubscribersCount = args[0];
 const target = args[1];
-const subscriberDifference = target - currentSubscribersCount;
+const subscriberDifference = (target - currentSubscribersCount) + Math.floor(Math.random() * 11) - 5;
 const completionPercentage = (currentSubscribersCount / target) * 100;
 
 const text = `${subscriberDifference} subscribers to go!`;
