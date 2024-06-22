@@ -1,5 +1,4 @@
 import os
-import sys
 
 import googleapiclient.discovery
 import googleapiclient.errors
@@ -28,7 +27,7 @@ def main():
 
     request = youtube.channels().list(
         part="statistics",
-        id="UCYzV77unbAR8KiIoSm4zdUw",
+        # id=channel_id,
         mine=True
     )
     response = request.execute()
