@@ -1,24 +1,35 @@
 #!/bin/bash
 
-python3 subscriber_difference_finder.py
+LUKEJ_SUBS=$(python3 lukej_subscriber_finder.py)
 if [ $? -eq 0 ]; then
-    echo "subscriber_difference_finder.py completed successfully"
-    # Update meta.json here
+    echo "lukej_subscriber_finder.py completed successfully. Found $LUKEJ_SUBS subscribers."
 else
-    echo "subscriber_difference_finder.py failed"
+    echo "lukej_subscriber_finder.py failed"
     exit 1
 fi
 
-node banner_generator.js
+TARGET_SUBS=$(python3 subscriber_finder.py UCLAXVftO2nhgTcnJrgdijDw)
+if [ $? -eq 0 ]; then
+    echo "subscriber_finder.py completed successfully. Found $TARGET_SUBS subscribers."
+else
+    echo "subscriber_finder.py failed"
+    exit 1
+fi
+
+node banner-generator.js $LUKEJ_SUBS $TARGET_SUBS
 if [ $? -eq 0 ]; then
     echo "banner_generator.js completed successfully"
-    # Perform banner update here
 else
     echo "banner_generator.js failed"
     exit 1
 fi
 
-# Perform banner update
-# Add your banner update logic here
+python3 banner-updater.py UCYzV77unbAR8KiIoSm4zdUw
+if [ $? -eq 0 ]; then
+    echo "banner_updater.py completed successfully"
+else
+    echo "banner_updater.py failed"
+    exit 1
+fi
 
 echo "Banner update completed successfully"

@@ -54,8 +54,8 @@ async function addTextToImage(
 
 const inputPath = "input_banner.jpeg";
 const fontPath = "Arial.ttf";
-const currentSubscribersCount = 4000;
-const target = 8900;
+const currentSubscribersCount = args[0];
+const target = args[1];
 const subscriberDifference = target - currentSubscribersCount;
 
 const text = `${subscriberDifference} subscribers to go!`;

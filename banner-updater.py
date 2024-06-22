@@ -28,29 +28,31 @@ def main():
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, credentials=credentials)
+    
+    print(channel_id)
 
-    media = MediaFileUpload('input_banner.jpeg', mimetype='image/jpeg')
-    request = youtube.channelBanners().insert(
-        media_body=media
-    )
-    response = request.execute()
-    print(response)
+    # media = MediaFileUpload('output_banner.jpeg', mimetype='image/jpeg')
+    # request = youtube.channelBanners().insert(
+    #     media_body=media
+    # )
+    # response = request.execute()
+    # print(response)
 
-    request = youtube.channels().update(
-        part='brandingSettings',
-        body={
-            'id': channel_id,
-            'brandingSettings': {
-                'image': {
-                    'bannerExternalUrl': response['url']
-                }
-            }
-        }
+    # request = youtube.channels().update(
+    #     part='brandingSettings',
+    #     body={
+    #         'id': channel_id,
+    #         'brandingSettings': {
+    #             'image': {
+    #                 'bannerExternalUrl': response['url']
+    #             }
+    #         }
+    #     }
 
-    ).execute()
-    response = request.execute()
+    # ).execute()
+    # response = request.execute()
 
-    print(response)
+    # print(response)
 
 if __name__ == "__main__":
     main()
