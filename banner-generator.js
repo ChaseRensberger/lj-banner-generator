@@ -57,6 +57,7 @@ const fontPath = "Arial.ttf";
 const currentSubscribersCount = args[0];
 const target = args[1];
 const subscriberDifference = target - currentSubscribersCount;
+const completionPercentage = (currentSubscribersCount / target) * 100;
 
 const text = `${subscriberDifference} subscribers to go!`;
 const outputFilename = `output_banner.jpeg`;
@@ -64,6 +65,6 @@ await addTextToImage(
   inputPath,
   text,
   fontPath,
-  ((target - currentSubscribersCount) / target) * 100,
+  completionPercentage,
   outputFilename
 );
