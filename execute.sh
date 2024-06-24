@@ -27,25 +27,25 @@ else
     exit 1
 fi
 
-# python3 banner_updater.py $LUKEJ_CHANNEL_ID
-# if [ $? -eq 0 ]; then
-#     echo "banner_updater.py completed successfully"
-# else
-#     echo "banner_updater.py failed"
-#     exit 1
-# fi
+python3 banner_updater.py $LUKEJ_CHANNEL_ID
+if [ $? -eq 0 ]; then
+    echo "banner_updater.py completed successfully"
+else
+    echo "banner_updater.py failed"
+    exit 1
+fi
 
-# # Update meta data last
+# Update meta data last
 
-# # Update sub counts
-# jq --arg lukej_subs "$LUKEJ_SUBSCRIBERS" --arg target_subs "$TARGET_SUBSCRIBERS" \
-#    '.lukej_subscribers = ($lukej_subs | tonumber) | .target_subscribers = ($target_subs | tonumber)' \
-#    meta.json > temp.json && mv temp.json meta.json
+# Update sub counts
+jq --arg lukej_subs "$LUKEJ_SUBSCRIBERS" --arg target_subs "$TARGET_SUBSCRIBERS" \
+   '.lukej_subscribers = ($lukej_subs | tonumber) | .target_subscribers = ($target_subs | tonumber)' \
+   meta.json > temp.json && mv temp.json meta.json
 
-# # Update last execution time
-# jq '.last_executed = (now | strftime("%Y-%m-%d %H:%M:%S"))' meta.json > temp.json && mv temp.json meta.json
+# Update last execution time
+jq '.last_executed = (now | strftime("%Y-%m-%d %H:%M:%S"))' meta.json > temp.json && mv temp.json meta.json
 
-# # Increment execution count
-# jq '.executions += 1' meta.json > temp.json && mv temp.json meta.json
+# Increment execution count
+jq '.executions += 1' meta.json > temp.json && mv temp.json meta.json
 
-# echo "Banner update completed successfully"
+echo "Banner update completed successfully"
