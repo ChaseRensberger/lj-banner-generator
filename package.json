@@ -11,8 +11,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "convert-svg-to-jpeg": "^0.6.4",
-    "sharp": "^0.33.4",
-    "text-to-svg": "^3.1.5"
+    "canvas": "^2.11.2",
+    "sharp": "^0.33.4"
   }
 }

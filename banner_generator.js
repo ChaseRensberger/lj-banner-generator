@@ -1,6 +1,5 @@
 import sharp from "sharp";
-import TextToSVG from "text-to-svg";
-import SVGToJpeg from "convert-svg-to-jpeg";
+import { createCanvas, loadImage, registerFont } from 'canvas';
 
 const args = process.argv.slice(2);
 
@@ -12,37 +11,45 @@ async function addTextToImage(
   outputFilename
 ) {
   try {
-    const textToSVG = TextToSVG.loadSync(fontPath);
-    const svgText = textToSVG.getSVG(text, {
-      x: 0,
-      y: 0,
-      fontSize: 48,
-      anchor: "top",
-      attributes: { fill: "white" },
-    });
 
-    const image = sharp(inputPath);
+    const inputImage = await loadImage(inputPath);
+    const imageWidth = inputImage.width;
+    const imageHeight = inputImage.height;
+
+    const canvas = createCanvas(imageWidth, imageHeight);
+    const ctx = canvas.getContext('2d');
+
+    ctx.drawImage(inputImage, 0, 0, imageWidth, imageHeight);
+
+    registerFont(fontPath, { family: 'CustomFont' });
+
+    ctx.font = '40px CustomFont';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const textX = imageWidth / 2;
+    const textY = imageHeight - 100;
+
+    ctx.fillText(text, textX, textY);
 
     const progressBarHeight = 80;
     const progressBarWidth = 1050;
     const filledWidth = progressBarWidth * (progressPercentage / 100);
-    const rxry = 0; // border radius
+    const progressBarX = (imageWidth - progressBarWidth) / 2;
+    const progressBarY = imageHeight - 200;
+    // const rxry = 0; // border radius
 
-    const progressBarEmptySVG = `<rect width="${progressBarWidth}" height="${progressBarHeight}" fill="white" rx="${rxry}" ry="${rxry}"/>`;
-    const progressBarFilledSVG = `<rect width="${filledWidth}" height="${progressBarHeight}" fill="#88DF68" rx="${rxry}" ry="${rxry}"/>`;
-    const progressBarSVG = `<svg width="${progressBarWidth}" height="${progressBarHeight}">${progressBarEmptySVG}${progressBarFilledSVG}</svg>`;
-    const progressBarJpeg = await SVGToJpeg.convert(progressBarSVG);
-    const result = await image
-      .composite([
-        { input: Buffer.from(progressBarJpeg), top: 700, left: 582 },
-        {
-          input: Buffer.from(svgText),
-          top: 800,
-          left: 860,
-        },
-      ])
-      .toFile(outputFilename);
-    //   .toBuffer(); // Convert the processed image to a buffer instead of saving it to a file
+    // Draw empty progress bar
+    ctx.fillStyle = 'white';
+    ctx.fillRect(progressBarX, progressBarY, progressBarWidth, progressBarHeight);
+
+    // Draw filled progress bar
+    ctx.fillStyle = '#88DF68';
+    ctx.fillRect(progressBarX, progressBarY, filledWidth, progressBarHeight);
+
+    const buffer = canvas.toBuffer('image/jpeg');
+    const result = await sharp(buffer).toFile(outputFilename);
 
     return result;
   } catch (error) {
