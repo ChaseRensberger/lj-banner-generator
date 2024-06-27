@@ -1,4 +1,6 @@
 node_modules/
+__pycache__/
 credentials.json
 client_secret.json
 output_banner.jpeg
+

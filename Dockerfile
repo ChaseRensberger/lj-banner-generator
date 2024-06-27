@@ -10,5 +10,6 @@ RUN npm install
 
 RUN pip3 install -r requirements.txt
 
-RUN crontab -l | { cat; echo "*/30 * * * * /bin/bash /app/execute.sh >> /var/log/cron.log 2>&1"; } | crontab -
-CMD ["cron", "-f"]
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
+
+
