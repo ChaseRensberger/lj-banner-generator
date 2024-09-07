@@ -3,6 +3,7 @@ import subprocess
 
 app = FastAPI()
 
-@app.get("/")
+@app.post("/")
 def read_root():
     subprocess.run(["./execute.sh"])
+    return "Attempted to Execute"
