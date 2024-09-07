@@ -81,7 +81,7 @@ async function addTextToImage(
 }
 
 const inputPath = "input_banner.jpeg";
-const fontPath = "/app/Arial.ttf";
+const fontPath = "/usr/share/fonts/truetype/Arial.ttf";
 const currentSubscribersCount = args[0];
 const target = args[1];
 const subscriberDifference = (target - currentSubscribersCount) + Math.floor(Math.random() * 11) - 5;
