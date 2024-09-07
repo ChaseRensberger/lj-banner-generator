@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN apt-get update && apt-get install -y cron jq libcairo2-dev libpango1.0-dev libgif-dev
+RUN apt-get update && apt-get install -y jq libcairo2-dev libpango1.0-dev libgif-dev fontconfig
 
 RUN npm install
 
