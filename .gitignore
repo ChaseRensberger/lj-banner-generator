@@ -3,4 +3,4 @@ __pycache__/
 credentials.json
 client_secret.json
 output_banner.jpeg
-
+.DS_Store
